@@ -13,14 +13,14 @@ Ogni gruppo definisce un titolo progetto (< 100 caratteri) e una descrizione( <5
 
 
 ## Partecipanti
-Elenco partecipanti
+Sycaj Cordioli Mio
 
 ## Ruoli
 
-* PROJECT_MANAGER = 
-* DOCUMENTAZIONE = 
-* CODING JS
-* CODING UI
+* PROJECT_MANAGER = Cordioli Paolo
+* DOCUMENTAZIONE = Mio Francesco
+* CODING JS = Cordioli Paolo
+* CODING UI = Sycaj Claudio
 
 ## Regolamento
 * Ogni gruppo consegnerà il link ad un repository GIT che sarà un fork di questo progetto.
