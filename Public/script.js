@@ -2,12 +2,15 @@ area = document.getElementById("area");
 button = document.getElementById("button");
 url = "http://api.football-api.com/2.0/matches?comp_id=1269&match_date=24.11.2019";
 url2 ="http://api.football-api.com/2.0/matches?comp_id=1269&from_date=23.11.2019&to_date=25.11.2019";
+url3 = "https://api.football-data.org/v2/competitions/CL/matches"
 key = "&Authorization=565ec012251f932ea4000001fa542ae9d994470e73fdb314a8a56d76";
 
 
 const loadData = async () => {
     area.innerHTML = "";
-    let body = await fetch(url2 + key).then(response => response.json())
+    let body = await fetch(url3,{headers :{
+        'X-Auth-Token' : "a863a550115d409f84db0541699eed56"
+    }}).then(response => response.json())
     console.log(body)
     body.forEach(e => {
         li = document.createElement("li");
