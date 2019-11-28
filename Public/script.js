@@ -31,7 +31,7 @@ const loadRank = async () => {
     else createObjectRank(body);
 }
 
-createObjectRank = (body) => {
+const createObjectRank = (body) => {
     body.forEach(e => {
         team = {
             name : e.team_name,
@@ -103,3 +103,6 @@ const createScore = (match) => {
 }
 
 button.onclick = loadMatchs
+
+
+
