@@ -137,6 +137,6 @@ premierLeague.onclick = async() => {
     idCampionato = "1204"
     await loadRank();
     createGraphicForRank();
-}
-
-
+}      
+     
+        
