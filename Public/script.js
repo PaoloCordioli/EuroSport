@@ -2,7 +2,6 @@ const url = "http://api.football-api.com/2.0/matches?comp_id="; //api per partit
 const urlClassifica = "http://api.football-api.com/2.0/standings/"; // api per classifica
 const key = "&Authorization=565ec012251f932ea4000001fa542ae9d994470e73fdb314a8a56d76"; //chiave di autorizzazione
 const data = "&match_date=25.11.2019";
-const table = document.getElementById("table")
 
 const button = document.getElementById("button");
 let idCampionato = "";
@@ -106,9 +105,9 @@ const createGraphicForRank =  () => {
 
 serieA.onclick = async () => {
     idCampionato = "1269"
-        await loadRank();
-        createGraphicForRank();
-    }
+    await loadRank();
+    createGraphicForRank();
+}
 
 serieB.onclick = async () => {
     idCampionato = "1265"
