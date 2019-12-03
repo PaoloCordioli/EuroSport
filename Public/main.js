@@ -8,6 +8,9 @@ let idCampionato = "";
 let matchs = [];
 let rank = [];
 
+//import createGraphicForRank from "graphic.js";
+const table = document.getElementById("table");
+
 const serieA = document.getElementById("serieA"); //id 1269 serieA
 const serieB = document.getElementById("serieB"); //id 1265 serieB
 const ligueOne = document.getElementById("ligueOne"); //id 1221 ligue 1
@@ -18,18 +21,18 @@ const premierLeague = document.getElementById("premierLeague"); //id 1204 premie
 const loadMatchs = async () => {
     let body = await fetch(url + idCampionato + data + key).then(response => response.json())
     matchs = []
-    if(body.status === "error"){
+    if (body.status === "error") {
         console.log("ERRORE")
     }
     else createObjectMatch(body)
 };
 
 const createObjectMatch = (body) => {
-    body.forEach(e => {   
+    body.forEach(e => {
         match = {
             localTeam: e.localteam_name,
             visitorTeam: e.visitorteam_name,
-            score : createScore(e),
+            score: createScore(e),
             date: e.formatted_date,
             events: createEvents(e.events),
             time: createTime(e.time)
@@ -88,20 +91,56 @@ const loadRank = async () => {
 const createObjectRank = (body) => {
     body.forEach(e => {
         team = {
-            name : e.team_name,
-            position : e.position,
-            points : e.points
+            name: e.team_name,
+            position: e.position,
+            points: e.points
         }
         rank.push(team)
     });
-    rank.sort(function(a,b){
+    rank.sort(function (a, b) {
         return a.position - b.position
     })
 }
 
-const createGraphicForRank =  () => {
+const createGraphicForRank = () => {
     console.log(rank)
-}
+    table.innerHTML = "";
+    const body = document.createElement("tbody");
+    table.appendChild(body)
+    
+    tr = document.createElement("tr")
+    th = document.createElement("th")
+    th.innerHTML = "Posizione"
+    tr.appendChild(th)
+    body.appendChild(tr)
+
+    th = document.createElement("th")
+    th.innerHTML = "Squadra"
+    tr.appendChild(th)
+    body.appendChild(tr)
+
+    th = document.createElement("th")
+    th.innerHTML = "Punti"
+    tr.appendChild(th)
+    body.appendChild(tr)
+
+
+    for (let i = 0; i < rank.length; i++) {
+        tr = document.createElement("tr")
+        tdPos = document.createElement("td")
+        tdPos.innerText = rank[i].position
+        tr.appendChild(tdPos)
+        tdName = document.createElement("td")
+        tdName.innerText = rank[i].name
+        tr.appendChild(tdName)
+        tdPoints = document.createElement("td")
+        tdPoints.innerText = rank[i].points
+        tr.appendChild(tdPoints)
+        body.appendChild(tr);
+    }
+
+};
+
 
 serieA.onclick = async () => {
     idCampionato = "1269"
@@ -127,16 +166,16 @@ bundesliga.onclick = async () => {
     createGraphicForRank();
 }
 
-liga.onclick = async() => {
+liga.onclick = async () => {
     idCampionato = "1399"
     await loadRank();
     createGraphicForRank();
 }
 
-premierLeague.onclick = async() => {
+premierLeague.onclick = async () => {
     idCampionato = "1204"
     await loadRank();
     createGraphicForRank();
-}      
-     
-        
+}
+
+
