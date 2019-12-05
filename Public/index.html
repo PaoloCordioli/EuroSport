@@ -6,9 +6,10 @@
   <meta name="viewport" content="width=device-width">
   <title>Serie A in Live</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/css/bootstrap.min.css">
+  <link rel="icon" href="img/soccer.png" id="icon">
 </head>
 
-<body>
+<body id="window">
   <div class="mx-auto" style="width: 500px;">
     <nav class="navbar navbar-expand-lg navbar-expand-sm navbar-light bg-light">
       <div class="navbar-expand">
@@ -35,6 +36,8 @@
       </div>
     </nav>
   </div>
+  <img src="img/eurosport.png" style="max-height: 200px; max-width: 350px; margin-left: 50px; margin-top: -65px;">
+  <img src="img/logo.png" style="max-height: 350px; max-width: 350px; margin-left: 800px; margin-top: -45px;">
   <br>
   <div class="container">
     <div class="row">
@@ -44,11 +47,11 @@
         </div>
       </div>
       <div class="col">
-        <input type="date" id="date">
-        <div class="table-responsive">
-          <table class="table table-sm" id="tableMatchs"></table>
+        <input type="date" id="date" style="margin-left: 35%; margin-bottom: 25px;">
+        <div id="tableMatchs">
         </div>
       </div>
     </div>
-    <script src="main.js"></script>
+  </div>
+  <script src="main.js"></script>
 </body>

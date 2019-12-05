@@ -1,17 +1,16 @@
-const url = "http://api.football-api.com/2.0/matches?comp_id="; //api per partite
+const urlMatch = "http://api.football-api.com/2.0/matches?comp_id="; //api per partite
 const urlClassifica = "http://api.football-api.com/2.0/standings/"; // api per classifica
 const key = "&Authorization=565ec012251f932ea4000001fa542ae9d994470e73fdb314a8a56d76"; //chiave di autorizzazione
 
-const button = document.getElementById("button");
-let idCampionato = "";
-let matchs = [];
-let rank = [];
-let date = "";
+let idCampionato = ""; // id del campionato con cui lavorare
+let matchs = []; // oggetto contenente le partite di una certa data di un campionato
+let rank = []; // oggetto contenente la classifica di un campionato
+let date = ""; // oggetto per la data
 
-
-const tableRank = document.getElementById("tableRank");
-const tableMatchs = document.getElementById("tableMatchs");
-const inputDate = document.getElementById("date");
+const tableRank = document.getElementById("tableRank"); //spazio per visualizzare classifica
+const tableMatchs = document.getElementById("tableMatchs"); //spazio per visualizzare le partite
+const inputDate = document.getElementById("date"); //oggetto dell'input date
+const page = document.getElementById("window"); //oggetto del body
 
 const serieA = document.getElementById("serieA"); //id 1269 serieA
 const serieB = document.getElementById("serieB"); //id 1265 serieB
@@ -20,8 +19,9 @@ const bundesliga = document.getElementById("bundesliga"); //id 1229 bundesliga
 const liga = document.getElementById("liga"); //id 1399 liga
 const premierLeague = document.getElementById("premierLeague"); //id 1204 premier
 
-const loadMatchs = async () => {
-    let body = await fetch(url + idCampionato + "&match_date=" + date + key).then(response => response.json())
+//funzioni per le partite
+const loadMatchs = async () => { // funzione per caricare le partite
+    let body = await fetch(urlMatch + idCampionato + "&match_date=" + date + key).then(response => response.json())
     matchs = []
     if (body.status === "error") {
         console.log("ERRORE")
@@ -29,7 +29,7 @@ const loadMatchs = async () => {
     else createObjectMatch(body)
 };
 
-const createObjectMatch = (body) => {
+const createObjectMatch = (body) => { // creo oggetto contenente le partite
     body.forEach(e => {
         match = {
             localTeam: e.localteam_name,
@@ -43,7 +43,7 @@ const createObjectMatch = (body) => {
     });
 }
 
-const createTime = (time) => {
+const createTime = (time) => { // creo oggetto che ne indica l'ora della singola partita
     time = time.split(":")
     let hours = parseInt(time[0]) + 1
     time[0] = hours.toString()
@@ -51,7 +51,7 @@ const createTime = (time) => {
     return time;
 }
 
-const createEvents = (event) => {
+const createEvents = (event) => { // creo oggetto contenente i goal e assist
     let events = []
     event.forEach(e => {
         if (e.type === "goal") {
@@ -68,7 +68,7 @@ const createEvents = (event) => {
     return events
 }
 
-const createScore = (match) => {
+const createScore = (match) => { // creo oggetto contenente il risultato
     if (match.ft_score === "[-]") {
         score = {
             localTeam: "-",
@@ -84,13 +84,15 @@ const createScore = (match) => {
     return score
 }
 
-const loadRank = async () => {
+
+//funzioni per la classifica
+const loadRank = async () => { // funzione per caricare la classifica
     let body = await fetch(urlClassifica + idCampionato + "?" + key).then(response => response.json())
     rank = []
     createObjectRank(body);
 }
 
-const createObjectRank = (body) => {
+const createObjectRank = (body) => { // creo oggetto contenente la classifica
     body.forEach(e => {
         team = {
             name: e.team_name,
@@ -104,11 +106,15 @@ const createObjectRank = (body) => {
     })
 }
 
-const createGraphicForRank = () => {
-    tableRank.innerText = "";
-    body = document.createElement("tbody");
+
+
+//funzione per la grafica
+const createGraphicForRank = () => { // visualizzo la classifica
+    tableMatchs.innerText = ""
+    tableRank.innerText = ""
+    body = document.createElement("tbody")
     tableRank.appendChild(body)
-    
+
     tr = document.createElement("tr")
     th = document.createElement("th")
     th.innerHTML = "Posizione"
@@ -141,75 +147,135 @@ const createGraphicForRank = () => {
     }
 };
 
-const createGraphicForMatchs = async () => {
+const createGraphicForMatchs = async () => { // visualizzo le partite
+    tableMatchs.innerHTML = "<div class='spinner-border' role='status'>" + "<span class='sr-only'>Loading...</span>" + "</div>"
     await loadMatchs();
-    console.log(matchs)
-    tableMatchs.innerText = ""
-    body = document.createElement("body")
-    tableMatchs.appendChild(body)
+    if (matchs.length === 0) {
+        tableMatchs.innerHTML = "<p style='margin-left: 150px;'> Nessuna partita per la data selezionata </p>"
+    }
+    else {
+        tableMatchs.innerText = ""
+        matchs.forEach(e => {
+            table = document.createElement("table")
+            table.setAttribute('class', 'table table-bordered table-sm')
+            body = document.createElement("tbody")
+            table.appendChild(body)
 
-    for (let i = 0; i < matchs.length; i++) {
-        tr = document.createElement("tr")
-        tdPos = document.createElement("td")
-        tdPos.innerText = matchs[i].localTeam
-        tr.appendChild(tdPos)
+            tr = document.createElement("tr")
 
-        tdName = document.createElement("td")
-        tdName.innerText = matchs[i].visitorTeam
-        tr.appendChild(tdName)
+            tdLocal = document.createElement("td")
+            if (e.score.localTeam === "-") {
+                tdLocal.innerHTML = e.localTeam + "<br>"
+            }
+            else tdLocal.innerHTML = e.localTeam + "<br>" + "<hr>"
+            e.events.forEach(e => {
+                if (e.team === "localteam") {
+                    if (e.assist !== "") {
+                        tdLocal.innerHTML += "<img src='img/iconGoal.jpg'>" + e.goal + " " + e.time + "'" + "<br>" + "<img src='img/iconAssist.jpg'>" + e.assist + "<br>"
+                    }
+                    else tdLocal.innerHTML += "<img src='img/iconGoal.jpg'>" + e.goal + " " + e.time + "'" + "<br>"
+                }
+            });
+            tr.appendChild(tdLocal)
 
-        tdPoints = document.createElement("td")
-        tdPoints.innerText = matchs[i].score.localTeam + "-" + matchs[i].score.visitorTeam
-        tr.appendChild(tdPoints)
+            tdVisitor = document.createElement("td")
+            if (e.score.localTeam === "-") {
+                tdVisitor.innerHTML = e.visitorTeam + "<br>"
+            }
+            else tdVisitor.innerHTML = e.visitorTeam + "<br>" + "<hr>"
+            e.events.forEach(e => {
+                if (e.team === "visitorteam") {
+                    if (e.assist !== "") {
+                        tdVisitor.innerHTML += "<img src='img/iconGoal.jpg'>" + e.goal + " " + e.time + "'" + "<br>" + "<img src='img/iconAssist.jpg'>" + e.assist + "<br>"
+                    }
+                    else tdVisitor.innerHTML += "<img src='img/iconGoal.jpg'>" + e.goal + " " + e.time + "'" + "<br>"
+                }
+            });
+            tr.appendChild(tdVisitor)
 
-        body.appendChild(tr);
+
+            tdPoints = document.createElement("td")
+            if (e.score.localTeam === "-") {
+                tdPoints.innerText = "0 - 0"
+            }
+            else {
+                tdPoints.innerText = e.score.localTeam + "-" + e.score.visitorTeam
+            }
+            tr.appendChild(tdPoints)
+
+            tdTime = document.createElement("td")
+            tdTime.innerText = e.time
+            tr.appendChild(tdTime)
+
+            body.appendChild(tr)
+            tableMatchs.appendChild(table)
+            br = document.createElement("br")
+            tableMatchs.appendChild(br)
+        });
     }
 }
 
 
-serieA.onclick = async () => {
+
+//funzioni assegnate ai bottoni
+serieA.onclick = async () => { // carico la classifica della serieA
     idCampionato = "1269"
     await loadRank();
     createGraphicForRank();
 }
 
-serieB.onclick = async () => {
+serieB.onclick = async () => { // carico la classifica della serieB
     idCampionato = "1265"
     await loadRank();
     createGraphicForRank();
 }
 
-ligueOne.onclick = async () => {
+ligueOne.onclick = async () => { // carico la classifica della ligueOne
     idCampionato = "1221"
     await loadRank();
     createGraphicForRank();
 }
 
-bundesliga.onclick = async () => {
+bundesliga.onclick = async () => {// carico la classifica della Bundesliga
     idCampionato = "1229"
     await loadRank();
     createGraphicForRank();
 }
 
-liga.onclick = async () => {
+liga.onclick = async () => { // carico la classifica della Liga spagnola
     idCampionato = "1399"
     await loadRank();
     createGraphicForRank();
 }
 
-premierLeague.onclick = async () => {
+premierLeague.onclick = async () => { // carico la classifica della Premier League
     idCampionato = "1204"
     await loadRank();
     createGraphicForRank();
 }
 
-const getDate = () => {
-    year = inputDate.value.substring(0,4)
-    month = inputDate.value.substring(5,7)
-    day = inputDate.value.substring(8,10)
+
+
+// funzioni varie
+const getDate = () => { // ottengo la data dall'input
+    year = inputDate.value.substring(0, 4)
+    month = inputDate.value.substring(5, 7)
+    day = inputDate.value.substring(8, 10)
     date = day + "." + month + "." + year
     createGraphicForMatchs()
 }
 
-inputDate.onchange = getDate;
+const avvio = async () => { // funzione da chiamare all'avvio
+    idCampionato = "1269"
+    await loadRank();
+    createGraphicForRank()
+
+}
+
+
+
+//assegnamento di funzioni agli id dell'html
+page.onload = avvio; // caricata la pagina chiamo la funzione
+inputDate.onchange = getDate; // quando cambia valore chiamo la funzione 
+
 
