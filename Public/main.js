@@ -173,7 +173,7 @@ const createGraphicForMatchs = async () => { // visualizzo le partite
     tableMatchs.innerHTML = "<div class='spinner-border' role='status'>" + "<span class='sr-only'>Loading...</span>" + "</div>"
     await loadMatchs();
     if (matchs.length === 0) {
-        tableMatchs.innerHTML = "<p style='margin-left: 150px;'> Nessuna partita per la data selezionata </p>"
+        tableMatchs.innerHTML = "<p style='margin-left: 125px;'> Nessuna partita per la data selezionata </p>"
     }
     else {
         tableMatchs.innerText = ""
