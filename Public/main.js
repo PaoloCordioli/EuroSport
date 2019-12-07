@@ -13,6 +13,7 @@ const tableMatchs = document.getElementById("tableMatchs"); //spazio per visuali
 const inputDate = document.getElementById("date"); //oggetto dell'input date
 const page = document.getElementById("window"); //oggetto del body
 const title = document.getElementById("title"); // nome del campionato
+const legend = document.getElementById("legend"); // legenda dei colori
 
 const serieA = document.getElementById("serieA"); //id 1269 serieA
 const serieB = document.getElementById("serieB"); //id 1265 serieB
@@ -111,13 +112,18 @@ const createObjectRank = (body) => { // creo oggetto contenente la classifica
 
 
 //funzione per la grafica
-const createGraphicForRank = () => { // visualizzo la classifica
-    tableMatchs.innerText = ""
+const createGraphicForRank = (level) => { // visualizzo la classifica
     tableRank.innerText = ""
     body = document.createElement("tbody")
     tableRank.appendChild(body)
 
     tr = document.createElement("tr")
+
+    th = document.createElement("th")
+    th.innerHTML = ""
+    tr.appendChild(th)
+    body.appendChild(tr)
+
     th = document.createElement("th")
     th.innerHTML = "Posizione"
     tr.appendChild(th)
@@ -133,9 +139,23 @@ const createGraphicForRank = () => { // visualizzo la classifica
     tr.appendChild(th)
     body.appendChild(tr)
 
-
     for (let i = 0; i < rank.length; i++) {
         tr = document.createElement("tr")
+        tdLevel = document.createElement("td")
+        if (i < level.champion.to) {
+            tdLevel.setAttribute("style", "background-color : cornflowerblue; width: 1px;")
+        }
+        else if (i > level.europa.from && i < level.europa.to) {
+            tdLevel.setAttribute("style", "background-color : orange; width: 1px;")
+        }
+        else if (i >= level.europa.to && i < 17) {
+            tdLevel.setAttribute("style", "background-color : lightgray; width: 1px;")
+        }
+        else if (i > 16) {
+            tdLevel.setAttribute("style", "background-color : red; width: 1px;")
+        }
+
+        tr.appendChild(tdLevel)
         tdPos = document.createElement("td")
         tdPos.innerText = rank[i].position
         tr.appendChild(tdPos)
@@ -217,55 +237,144 @@ const createGraphicForMatchs = async () => { // visualizzo le partite
     }
 }
 
+const createLegend = (name) => {
+    if (name !== "serieB") {
+        legend.innerHTML =
+            "<p>Legend : <br> " +
+            "<img src = 'img/blue.jpg'> promozione in Champions League <br>" +
+            "<img src = 'img/orange.jpg'> promozione in Europa League <br>" +
+            "<img src = 'img/red.jpg'> retrocessione </p>"
+    }
+    else {
+        legend.innerHTML =
+            "<p>Legend : <br> " +
+            "<img src = 'img/blue.jpg'> promozione in serie A <br>" +
+            "<img src = 'img/orange.jpg'> play off per la serie A <br>" +
+            "<img src = 'img/red.jpg'> retrocessione </p>"
+    }
+}
+
 
 
 //funzioni assegnate ai bottoni
 serieA.onclick = async () => { // carico la classifica della serieA
     idCampionato = "1269"
-    title.innerHTML =  "Serie A"  + " " + "<img src='img/SerieA.jpg'>" 
+    tableMatchs.innerText = ""
+    legend.innerHTML = ""
+    title.innerHTML = "Serie A" + " " + "<img src='img/SerieA.jpg'>"
     tableRank.innerHTML = "<div class='spinner-border' role='status'>" + "<span class='sr-only'>Loading...</span>" + "</div>"
+    const level = {
+        champion: {
+            to: 4
+        },
+        europa: {
+            from: 3,
+            to: 6
+        }
+    }
     await loadRank();
-    createGraphicForRank();
+    createGraphicForRank(level);
+    createLegend("serieA")
 }
 
 serieB.onclick = async () => { // carico la classifica della serieB
     idCampionato = "1265"
-    title.innerHTML =  "Serie B"  + " " + "<img src='img/SerieB.jpg'>" 
+    tableMatchs.innerText = ""
+    legend.innerHTML = ""
+    title.innerHTML = "Serie B" + " " + "<img src='img/SerieB.jpg'>"
     tableRank.innerHTML = "<div class='spinner-border' role='status'>" + "<span class='sr-only'>Loading...</span>" + "</div>"
+    const level = {
+        champion: {
+            to: 2
+        },
+        europa: {
+            from: 1,
+            to: 8
+        }
+    }
     await loadRank();
-    createGraphicForRank();
+    createGraphicForRank(level);
+    createLegend("serieB")
 }
 
 ligueOne.onclick = async () => { // carico la classifica della ligueOne
     idCampionato = "1221"
-    title.innerHTML =  "Ligue 1"  + " " + "<img src='img/Ligue1.jpg'>" 
+    tableMatchs.innerText = ""
+    legend.innerHTML = ""
+    title.innerHTML = "Ligue 1" + " " + "<img src='img/Ligue1.jpg'>"
     tableRank.innerHTML = "<div class='spinner-border' role='status'>" + "<span class='sr-only'>Loading...</span>" + "</div>"
+    const level = {
+        champion: {
+            to: 3
+        },
+        europa: {
+            from: 2,
+            to: 4
+        }
+    }
     await loadRank();
-    createGraphicForRank();
+    createGraphicForRank(level);
+    createLegend("ligueOne")
 }
 
 bundesliga.onclick = async () => {// carico la classifica della Bundesliga
     idCampionato = "1229"
-    title.innerHTML =  "Bundesliga"  + " " + "<img src='img/Bundesliga.jpg'>" 
+    tableMatchs.innerText = ""
+    legend.innerHTML = ""
+    title.innerHTML = "Bundesliga" + " " + "<img src='img/Bundesliga.jpg'>"
     tableRank.innerHTML = "<div class='spinner-border' role='status'>" + "<span class='sr-only'>Loading...</span>" + "</div>"
+    const level = {
+        champion: {
+            to: 4
+        },
+        europa: {
+            from: 3,
+            to: 6
+        }
+    }
     await loadRank();
-    createGraphicForRank();
+    createGraphicForRank(level);
+    createLegend("bundesliga")
 }
 
 liga.onclick = async () => { // carico la classifica della Liga spagnola
     idCampionato = "1399"
-    title.innerHTML =  "Liga"  + " " + "<img src='img/LaLiga.jpg'>" 
+    tableMatchs.innerText = ""
+    legend.innerHTML = ""
+    title.innerHTML = "Liga" + " " + "<img src='img/LaLiga.jpg'>"
     tableRank.innerHTML = "<div class='spinner-border' role='status'>" + "<span class='sr-only'>Loading...</span>" + "</div>"
+    const level = {
+        champion: {
+            to: 4
+        },
+        europa: {
+            from: 3,
+            to: 7
+        }
+    }
     await loadRank();
-    createGraphicForRank();
+    createGraphicForRank(level);
+    createLegend("liga")
 }
 
 premierLeague.onclick = async () => { // carico la classifica della Premier League
     idCampionato = "1204"
-    title.innerHTML =  "Premier League"  + " " + "<img src='img/PremierLeague.jpg'>" 
+    tableMatchs.innerText = ""
+    legend.innerHTML = ""
+    title.innerHTML = "Premier League" + " " + "<img src='img/PremierLeague.jpg'>"
     tableRank.innerHTML = "<div class='spinner-border' role='status'>" + "<span class='sr-only'>Loading...</span>" + "</div>"
+    const level = {
+        champion: {
+            to: 4
+        },
+        europa: {
+            from: 3,
+            to: 5
+        }
+    }
     await loadRank();
-    createGraphicForRank();
+    createGraphicForRank(level);
+    createLegend("premier")
 }
 
 
@@ -281,10 +390,20 @@ const getDate = () => { // ottengo la data dall'input
 
 const avvio = async () => { // funzione da chiamare all'avvio
     idCampionato = "1269"
-    title.innerHTML =  "Serie A"  + " " + "<img src='img/SerieA.jpg'>" 
+    title.innerHTML = "Serie A" + " " + "<img src='img/SerieA.jpg'>"
     tableRank.innerHTML = "<div class='spinner-border' role='status'>" + "<span class='sr-only'>Loading...</span>" + "</div>"
+    const level = {
+        champion: {
+            to: 4
+        },
+        europa: {
+            from: 3,
+            to: 6
+        }
+    }
     await loadRank();
-    createGraphicForRank()
+    createGraphicForRank(level)
+    createLegend("serieA")
 }
 
 
