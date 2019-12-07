@@ -7,10 +7,12 @@ let matchs = []; // oggetto contenente le partite di una certa data di un campio
 let rank = []; // oggetto contenente la classifica di un campionato
 let date = ""; // oggetto per la data
 
+
 const tableRank = document.getElementById("tableRank"); //spazio per visualizzare classifica
 const tableMatchs = document.getElementById("tableMatchs"); //spazio per visualizzare le partite
 const inputDate = document.getElementById("date"); //oggetto dell'input date
 const page = document.getElementById("window"); //oggetto del body
+const title = document.getElementById("title"); // nome del campionato
 
 const serieA = document.getElementById("serieA"); //id 1269 serieA
 const serieB = document.getElementById("serieB"); //id 1265 serieB
@@ -157,7 +159,7 @@ const createGraphicForMatchs = async () => { // visualizzo le partite
         tableMatchs.innerText = ""
         matchs.forEach(e => {
             table = document.createElement("table")
-            table.setAttribute('class', 'table table-bordered table-sm')
+            table.setAttribute('class', 'table table-bordered table-sm table-borderless')
             body = document.createElement("tbody")
             table.appendChild(body)
 
@@ -220,36 +222,48 @@ const createGraphicForMatchs = async () => { // visualizzo le partite
 //funzioni assegnate ai bottoni
 serieA.onclick = async () => { // carico la classifica della serieA
     idCampionato = "1269"
+    title.innerHTML =  "Serie A"  + " " + "<img src='img/SerieA.jpg'>" 
+    tableRank.innerHTML = "<div class='spinner-border' role='status'>" + "<span class='sr-only'>Loading...</span>" + "</div>"
     await loadRank();
     createGraphicForRank();
 }
 
 serieB.onclick = async () => { // carico la classifica della serieB
     idCampionato = "1265"
+    title.innerHTML =  "Serie B"  + " " + "<img src='img/SerieB.jpg'>" 
+    tableRank.innerHTML = "<div class='spinner-border' role='status'>" + "<span class='sr-only'>Loading...</span>" + "</div>"
     await loadRank();
     createGraphicForRank();
 }
 
 ligueOne.onclick = async () => { // carico la classifica della ligueOne
     idCampionato = "1221"
+    title.innerHTML =  "Ligue 1"  + " " + "<img src='img/Ligue1.jpg'>" 
+    tableRank.innerHTML = "<div class='spinner-border' role='status'>" + "<span class='sr-only'>Loading...</span>" + "</div>"
     await loadRank();
     createGraphicForRank();
 }
 
 bundesliga.onclick = async () => {// carico la classifica della Bundesliga
     idCampionato = "1229"
+    title.innerHTML =  "Bundesliga"  + " " + "<img src='img/Bundesliga.jpg'>" 
+    tableRank.innerHTML = "<div class='spinner-border' role='status'>" + "<span class='sr-only'>Loading...</span>" + "</div>"
     await loadRank();
     createGraphicForRank();
 }
 
 liga.onclick = async () => { // carico la classifica della Liga spagnola
     idCampionato = "1399"
+    title.innerHTML =  "Liga"  + " " + "<img src='img/LaLiga.jpg'>" 
+    tableRank.innerHTML = "<div class='spinner-border' role='status'>" + "<span class='sr-only'>Loading...</span>" + "</div>"
     await loadRank();
     createGraphicForRank();
 }
 
 premierLeague.onclick = async () => { // carico la classifica della Premier League
     idCampionato = "1204"
+    title.innerHTML =  "Premier League"  + " " + "<img src='img/PremierLeague.jpg'>" 
+    tableRank.innerHTML = "<div class='spinner-border' role='status'>" + "<span class='sr-only'>Loading...</span>" + "</div>"
     await loadRank();
     createGraphicForRank();
 }
@@ -267,9 +281,10 @@ const getDate = () => { // ottengo la data dall'input
 
 const avvio = async () => { // funzione da chiamare all'avvio
     idCampionato = "1269"
+    title.innerHTML =  "Serie A"  + " " + "<img src='img/SerieA.jpg'>" 
+    tableRank.innerHTML = "<div class='spinner-border' role='status'>" + "<span class='sr-only'>Loading...</span>" + "</div>"
     await loadRank();
     createGraphicForRank()
-
 }
 
 
