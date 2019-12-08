@@ -261,6 +261,7 @@ serieA.onclick = async () => { // carico la classifica della serieA
     idCampionato = "1269"
     tableMatchs.innerText = ""
     legend.innerHTML = ""
+    inputDate.value = null
     title.innerHTML = "Serie A" + " " + "<img src='img/SerieA.jpg'>"
     tableRank.innerHTML = "<div class='spinner-border' role='status'>" + "<span class='sr-only'>Loading...</span>" + "</div>"
     const level = {
@@ -281,6 +282,7 @@ serieB.onclick = async () => { // carico la classifica della serieB
     idCampionato = "1265"
     tableMatchs.innerText = ""
     legend.innerHTML = ""
+    inputDate.value = null
     title.innerHTML = "Serie B" + " " + "<img src='img/SerieB.jpg'>"
     tableRank.innerHTML = "<div class='spinner-border' role='status'>" + "<span class='sr-only'>Loading...</span>" + "</div>"
     const level = {
@@ -301,6 +303,7 @@ ligueOne.onclick = async () => { // carico la classifica della ligueOne
     idCampionato = "1221"
     tableMatchs.innerText = ""
     legend.innerHTML = ""
+    inputDate.value = null
     title.innerHTML = "Ligue 1" + " " + "<img src='img/Ligue1.jpg'>"
     tableRank.innerHTML = "<div class='spinner-border' role='status'>" + "<span class='sr-only'>Loading...</span>" + "</div>"
     const level = {
@@ -321,6 +324,7 @@ bundesliga.onclick = async () => {// carico la classifica della Bundesliga
     idCampionato = "1229"
     tableMatchs.innerText = ""
     legend.innerHTML = ""
+    inputDate.value = null
     title.innerHTML = "Bundesliga" + " " + "<img src='img/Bundesliga.jpg'>"
     tableRank.innerHTML = "<div class='spinner-border' role='status'>" + "<span class='sr-only'>Loading...</span>" + "</div>"
     const level = {
@@ -341,6 +345,7 @@ liga.onclick = async () => { // carico la classifica della Liga spagnola
     idCampionato = "1399"
     tableMatchs.innerText = ""
     legend.innerHTML = ""
+    inputDate.value = null
     title.innerHTML = "Liga" + " " + "<img src='img/LaLiga.jpg'>"
     tableRank.innerHTML = "<div class='spinner-border' role='status'>" + "<span class='sr-only'>Loading...</span>" + "</div>"
     const level = {
@@ -361,6 +366,7 @@ premierLeague.onclick = async () => { // carico la classifica della Premier Leag
     idCampionato = "1204"
     tableMatchs.innerText = ""
     legend.innerHTML = ""
+    inputDate.value = null
     title.innerHTML = "Premier League" + " " + "<img src='img/PremierLeague.jpg'>"
     tableRank.innerHTML = "<div class='spinner-border' role='status'>" + "<span class='sr-only'>Loading...</span>" + "</div>"
     const level = {
