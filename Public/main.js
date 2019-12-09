@@ -149,7 +149,7 @@ const createGraphicForRank = (level) => { // visualizzo la classifica
             tdLevel.setAttribute("style", "background-color : orange; width: 1px;")
         }
         else if (i >= level.europa.to && i < 17) {
-            tdLevel.setAttribute("style", "background-color : lightgray; width: 1px;")
+            tdLevel.setAttribute("style", "background-color : white; width: 1px;")
         }
         else if (i > 16) {
             tdLevel.setAttribute("style", "background-color : red; width: 1px;")
@@ -240,14 +240,14 @@ const createGraphicForMatchs = async () => { // visualizzo le partite
 const createLegend = (name) => {
     if (name !== "serieB") {
         legend.innerHTML =
-            "<p>Legend : <br> " +
+            "<p>Legenda : <br> " +
             "<img src = 'img/blue.jpg'> promozione in Champions League <br>" +
             "<img src = 'img/orange.jpg'> promozione in Europa League <br>" +
             "<img src = 'img/red.jpg'> retrocessione </p>"
     }
     else {
         legend.innerHTML =
-            "<p>Legend : <br> " +
+            "<p>Legenda : <br> " +
             "<img src = 'img/blue.jpg'> promozione in serie A <br>" +
             "<img src = 'img/orange.jpg'> play off per la serie A <br>" +
             "<img src = 'img/red.jpg'> retrocessione </p>"
